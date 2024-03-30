@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 
 const app = express();
-const port = 7000;
+const port = 7070;
 
 // Logging middleware
 app.use(morgan('dev'));
