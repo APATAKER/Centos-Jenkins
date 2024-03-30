@@ -20,8 +20,27 @@ pipeline {
         stage('Docker Run') {
             steps {
                 sh '''
-                    docker run -d -p 7070:7070 nodejsapp:v1
+                    docker run --name mynode -d -p 7070:7070 nodejsapp:v1
                 '''
+            }
+        }
+        stage('Manual Intervention') {
+            steps {
+                script {
+                    def userInput = input(
+                        id: 'userInput',
+                        message: 'Do you want to stop the container?',
+                        parameters: [
+                            choice(choices: ['Yes', 'No'], description: 'Select Yes or No', name: 'STOP_CONTAINER')
+                        ]
+                    )
+
+                    if (userInput == 'Yes') {
+                        sh 'docker rm -f mynode'
+                    } else {
+                        echo 'Skipping container stop'
+                    }
+                }
             }
         }
     }
