@@ -10,22 +10,19 @@ pipeline {
                 '''
             }
         }
-        stage('Docker build'){
+        stage('Docker build') {
             steps {
                 sh '''
                     docker build . -t nodejsapp:v1
                 '''
             }
         }
-        stage('Docker Run'){
+        stage('Docker Run') {
             steps {
-                
                 sh '''
                     docker run -d -p 7070:7070 nodejsapp:v1
                 '''
-                
             }
         }
-        
     }
 }
