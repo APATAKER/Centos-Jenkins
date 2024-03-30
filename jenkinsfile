@@ -13,14 +13,14 @@ pipeline {
         stage('Docker build') {
             steps {
                 sh '''
-                    docker build . -t nodejsapp:v1
+                    docker build . -t nodejsapp:feature
                 '''
             }
         }
         stage('Docker Run') {
             steps {
                 sh '''
-                    docker run --name mynode -d -p 7070:7070 nodejsapp:v1
+                    docker run --name mynode_f -d -p 7075:7075 nodejsapp:feature
                 '''
             }
         }
@@ -36,7 +36,7 @@ pipeline {
                     )
 
                     if (userInput == 'Yes') {
-                        sh 'docker rm -f mynode'
+                        sh 'docker rm -f mynode_f'
                     } else {
                         echo 'Skipping container stop'
                     }
